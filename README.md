@@ -6,29 +6,11 @@ Because you cannot easily override the endpoints in the ruby aws-sdk, we can use
 
 (Note that the aws-sdk library for S3 does allow you to easily override its endpoint. Other services do not.)
 
-## Installation
-
-Add this line to your application's Gemfile:
-
-```ruby
-gem 'localstack_ruby_client'
-```
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install localstack_ruby_client
-
 ## Usage
 
-This gem must be used as part of a docker environment in which [LocalStack](https://github.com/localstack/localstack) is installed.
+This gem must be used as part of a docker environment in which [LocalStack](https://github.com/localstack/localstack) is installed. See the [docker-compose.yml](https://github.com/perrystreetsoftware/localstack_ruby_client/blob/master/docker-compose.yml) file as an example.
 
-See the docker-compose.yml file as an example.
-
-To run, check out this repo, then from the root run:
+To try this gem out, check out this repo, then from the root run:
 
 ```
    docker-compose up -d
@@ -37,6 +19,16 @@ To run, check out this repo, then from the root run:
    cd examples
    ruby test1.rb
 ```
+
+I will be publishing this as a proper [RubyGem](https://www.rubygems.org) shortly.
+
+## Supported Services
+
+- S3
+- DynamoDb
+- SQS
+
+LocalStack supports many more services, but right now we are starting with the basics.
 
 ## Development
 
