@@ -1,8 +1,7 @@
-require 'bundler/setup'
-Bundler.setup
-
-require 'localstack_ruby_client'
 require 'pry'
+require 'aws-sdk-s3'
+require 'aws-sdk-sqs'
+require 'aws-sdk-dynamodb'
 
 RSpec.configure do |config|
   # some (optional) config here

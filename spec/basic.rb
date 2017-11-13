@@ -4,15 +4,21 @@ require 'spec/spec_helper'
 
 describe 'Basic tests' do
   it 'sqs' do
-    sqs = Aws::SQS::Client.new
+    sqs = Aws::SQS::Resource.new(
+      region: 'us-east-1',
+      access_key_id: '...',
+      secret_access_key: '...',
+      endpoint: 'http://localstack:4576')
+
     sqs.create_queue(queue_name: 'test_q',
                      attributes: {
                        'All' => 'String' })
 
-    queue_url = 'https://sqs.us-mockregion-1.amazonaws.com/queue/test_q'
-    resp = sqs.send_message(queue_url: queue_url, message_body: 'hi')
+    client = sqs.client
+    queue_url = 'http://localstack:4576/queue/test_q'
+    resp = client.send_message(queue_url: queue_url, message_body: 'hi')
     expect(resp['message_id']).not_to be_nil
-    resp = sqs.receive_message(queue_url: queue_url, attribute_names: ['All'])
+    resp = client.receive_message(queue_url: queue_url, attribute_names: ['All'])
     expect(resp.messages.length).to eq 1
     expect(resp.messages.first.body).to eq 'hi'
     expect(resp.messages.first.md5_of_body).to \
@@ -20,11 +26,16 @@ describe 'Basic tests' do
   end
 
   it 's3' do
-    s3 = Aws::S3::Client.new(force_path_style: true)
+    s3 = Aws::S3::Resource.new(
+      region: 'us-east-1',
+      access_key_id: '...',
+      secret_access_key: '...',
+      endpoint: 'http://localstack:4572',
+      force_path_style: true)
 
     bucket_name = SecureRandom.hex(10)
     s3.create_bucket(bucket: bucket_name)
-    bucket = Aws::S3::Resource.new.bucket(bucket_name)
+    bucket = s3.bucket(bucket_name)
     # expect(bucket.exists?).to be true
 
     object = bucket.object('ruby.png')
@@ -36,9 +47,13 @@ describe 'Basic tests' do
   end
 
   it 'dynamodb' do
-    puts 'WARNING: DynamoDB seems to hang after a few runs...'
+    dynamo_db_resource = Aws::DynamoDB::Resource.new(
+      region: 'us-east-1',
+      access_key_id: '...',
+      secret_access_key: '...',
+      endpoint: 'http://localstack:4569')
 
-    dynamo_db = Aws::DynamoDB::Client.new
+    dynamo_db = dynamo_db_resource.client
 
     dynamo_db.list_tables.table_names.each do |name|
       dynamo_db.delete_table(table_name: name)
