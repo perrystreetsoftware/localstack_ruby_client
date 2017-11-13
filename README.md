@@ -1,6 +1,10 @@
 # LocalstackRubyClient
 
-Use LocalStack with Ruby
+Use LocalStack with Ruby.
+
+Because you cannot easily override the endpoints in the ruby aws-sdk, we can use this gem to configure WebMock to re-route requests from <service>.<region>.amazonaws.com to LocalStack.
+
+(Note that the aws-sdk library for S3 does allow you to easily override its endpoint. Other services do not.)
 
 ## Installation
 
@@ -20,7 +24,19 @@ Or install it yourself as:
 
 ## Usage
 
-See examples
+This gem must be used as part of a docker environment in which [LocalStack](https://github.com/localstack/localstack) is installed.
+
+See the docker-compose.yml file as an example.
+
+To run, check out this repo, then from the root run:
+
+```
+   docker-compose up -d
+   docker exec -it localstack_ruby_client_development_app bash
+   bundle exec rake install
+   cd examples
+   ruby test1.rb
+```
 
 ## Development
 

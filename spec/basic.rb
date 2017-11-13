@@ -36,6 +36,8 @@ describe 'Basic tests' do
   end
 
   it 'dynamodb' do
+    puts 'WARNING: DynamoDB seems to hang after a few runs...'
+
     dynamo_db = Aws::DynamoDB::Client.new
 
     dynamo_db.list_tables.table_names.each do |name|
