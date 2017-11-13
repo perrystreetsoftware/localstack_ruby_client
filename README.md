@@ -2,7 +2,7 @@
 
 Use LocalStack with Ruby.
 
-Because you cannot easily override the endpoints in the ruby aws-sdk, we can use this gem to configure WebMock to re-route requests from <service>.<region>.amazonaws.com to LocalStack.
+Because you cannot easily override the endpoints in the ruby aws-sdk, we can use this gem to configure WebMock to re-route requests from [service].[region].amazonaws.com to LocalStack.
 
 (Note that the aws-sdk library for S3 does allow you to easily override its endpoint. Other services do not.)
 
