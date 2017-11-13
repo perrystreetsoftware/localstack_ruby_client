@@ -1,4 +1,4 @@
-# LocalstackRubyClient
+# LocalStackRubyClient
 
 Use LocalStack with Ruby.
 
